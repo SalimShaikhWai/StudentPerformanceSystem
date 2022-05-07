@@ -11,24 +11,48 @@ namespace StudentPerformanceSystem.Course
     class CourseService
     {
 
-        DbConnection dbconn = new DbConnection();
+        //DbConnection dbconn = new DbConnection();
         public SqlDataReader GetAllCourse()
         {
-            dbconn.getConnection();
-            dbconn.getCommand("select *from SCcourse.course ");
-          return  dbconn.ExcecuteReader();
+            DbConnection.getConnection();
+            DbConnection.getCommand("select *from SCcourse.course ");
+          return DbConnection.ExcecuteReader();
             
         }
-        public void Add(Course c)
+        public SqlDataReader GetCourseByCourseCode(string course_code)
         {
+            DbConnection.getConnection();
+            DbConnection.GetStoreProcedure("SCcourse.getCourseByCourseCode");
+            DbConnection.AddInputParameter("course_code", course_code);
+            return DbConnection.ExcecuteReader();
 
         }
-        public void Edit(Course c)
+        public string Add(Course c)
         {
+            DbConnection.getConnection();
+            DbConnection.GetStoreProcedure("SCcourse.InsertCourse");
+            DbConnection.AddInputParameter("course_code", c.Course_code);
+            DbConnection.AddInputParameter("course_title", c.Course_title);
+            DbConnection.AddInputParameter("course_description", c.Course_description);
+            return DbConnection.ExcecuteNonQuery();
+        }
+        public string Edit(Course c)
+        {
+            DbConnection.getConnection();
+            DbConnection.GetStoreProcedure("SCcourse.UpdateCourseByCourseCode");
+            DbConnection.AddInputParameter("course_id", c.Course_id);
+            DbConnection.AddInputParameter("course_code", c.Course_code);
+            DbConnection.AddInputParameter("course_title", c.Course_title);
+            DbConnection.AddInputParameter("course_description", c.Course_description);
+            return DbConnection.ExcecuteNonQuery();
 
         }
         public void Delete(int courseId)
         {
+            DbConnection.getConnection();
+            DbConnection.GetStoreProcedure("SCcourse.UpdatedStatusOfCourse");
+            DbConnection.AddInputParameter("CourseId", courseId);
+            DbConnection.ExcecuteNonQuery();
 
         }
         public void DisplayCourseWiseAverageMarks()

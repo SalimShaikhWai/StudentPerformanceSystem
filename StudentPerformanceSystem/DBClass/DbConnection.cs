@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -7,36 +8,61 @@ using System.Threading.Tasks;
 
 namespace StudentPerformanceSystem.DBClass
 {
-    public class DbConnection
+    public static class DbConnection
     {
-        string connectionString= @"Data Source=WAIANGDESK21\MSSQLSERVER01;Initial Catalog=StudentMGTSystem;Integrated Security=True";
-        SqlConnection conn;
-        SqlCommand cmd;
+        static string connectionString= @"Data Source=WAIANGDESK21\MSSQLSERVER01;Initial Catalog=StudentMGTSystem;Integrated Security=True";
+       static SqlConnection conn;
+        static SqlCommand cmd;
 
-        public SqlConnection  getConnection()
+        public static SqlConnection  getConnection()
         {
+            
            conn= new SqlConnection(connectionString);
            return conn;
             
         }
 
-        public SqlCommand getCommand(string text)
-        {   conn.Open();
+        public static SqlCommand getCommand(string text)
+        {
+            if (conn.State != ConnectionState.Open)
+                    conn.Open();
             cmd=new SqlCommand(text,conn);
             return cmd;
         }
 
-        public SqlDataReader ExcecuteReader()
+        public static SqlCommand GetStoreProcedure(string text)
+        {
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
+
+            cmd = new SqlCommand(text, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            return cmd;
+        }
+
+        public static void AddInputParameter(string parameterName,dynamic value)
+        {
+            cmd.Parameters.Add(new SqlParameter( "@"+parameterName,value));
+        }
+        public static SqlDataReader ExcecuteReader()
         {
            return cmd.ExecuteReader();
         }
 
-        public void ExcecuteNonQuery()
+        public static string ExcecuteNonQuery()
         {
-             cmd.ExecuteNonQuery();
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return "Record Added Successfully";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
-        public void ExecuteScaler()
+        public static void ExecuteScaler()
         {
             cmd.ExecuteScalar();
         }
