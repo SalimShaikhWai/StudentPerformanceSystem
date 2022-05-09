@@ -9,7 +9,18 @@ namespace StudentPerformanceSystem.MenuMgt
     public class ConsoleHelper
     {
 
-
+        public static void ShowError(string message)
+        {
+            ConsoleTextColor.SetError();
+            Console.WriteLine(message);
+            ConsoleTextColor.Reset();
+        }
+        public static void ShowWarning(string message)
+        {
+            ConsoleTextColor.SetWarning();
+            Console.WriteLine(message);
+            Console.ResetColor();
+        }
 
 
         public static void WriteText(int width,string text)
@@ -17,8 +28,10 @@ namespace StudentPerformanceSystem.MenuMgt
             Console.BackgroundColor = ConsoleColor. Cyan;
             Console.ForegroundColor = ConsoleColor.Black;
             int val = width - text.Length;
-            string leftString = new string(' ', val / 2);
-            string rightString = new string(' ', val / 2);
+            
+            int lv = val / 2;
+            string leftString = new string(' ', val%2==0 ? lv:lv+1);
+            string rightString = new string(' ',lv);
                 Console.Write(leftString + text + rightString);
             Console.ResetColor();
         }
@@ -31,7 +44,7 @@ namespace StudentPerformanceSystem.MenuMgt
             Console.WriteLine(new String('-',width));
             int val = width - text.Length;
             string leftString = '|'+new string(' ', (val / 2)-1);
-            string rightString = new string(' ', (val / 2)-1)+"|";
+            string rightString = new string(' ', (val / 2))+"|";
             Console.WriteLine(leftString + text + rightString);
 
 

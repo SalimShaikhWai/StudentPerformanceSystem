@@ -1,6 +1,8 @@
-﻿using StudentPerformanceSystem.Course;
+﻿using StudentPerformanceSystem.CollectionOfInterfaces;
+using StudentPerformanceSystem.Course;
 using StudentPerformanceSystem.Marks;
-using StudentPerformanceSystem.Student;
+using StudentPerformanceSystem.Reports;
+using StudentPerformanceSystem.Students;
 using StudentPerformanceSystem.Subject;
 using System;
 using System.Collections.Generic;
@@ -12,39 +14,37 @@ namespace StudentPerformanceSystem.MenuMgt
 {
     public class Menu
     {
-        CourseManagement coursemanagement = new CourseManagement();
 
-        SubjectManagement subjectManagement = new SubjectManagement();
+     public  Icrud crudOperation;
+        public string menu="Crud";
 
-        StudentManagement studentManagement = new StudentManagement();
-
-        MarksManagementcs markManagement = new MarksManagementcs();
-        private static void ShowMenu()
+        ReportManagement reMan = new ReportManagement();
+        public Menu(Icrud crudObjecct)
+        {
+           this. crudOperation = crudObjecct;
+        }
+        public Menu()
+        {
+            menu = "Report";
+        }
+       
+        public static void ReportMenu()
+        {
+            ConsoleHelper.WriteLine("6.Display subject Wise  Marks by Roll No");
+            ConsoleHelper.WriteLine("7.Display Avg MArks Of Course");
+            ConsoleHelper.WriteLine("8.Display Student Report With Marks");
+            ConsoleHelper.WriteLine("9.Display Course Wise Max Marks");
+        }
+        private static void ShowCrudMenu()
         {
             ConsoleHelper.DrawLine(120);
             ConsoleHelper.WriteLine("Choose Operation");
-            ConsoleHelper.WriteLine("1.Add Course");
-            ConsoleHelper.WriteLine("2.Delete Course");
-            ConsoleHelper.WriteLine("3.GetAll Course");
-            ConsoleHelper.WriteLine("4.Updated Course");
-            ConsoleHelper.WriteLine("5.Get All Subject");
-            ConsoleHelper.WriteLine("6.Add Subject");
-            ConsoleHelper.WriteLine("7.Edit Subject");
-            ConsoleHelper.WriteLine("8.Delete Subject");
-            ConsoleHelper.WriteLine("9.Get Subject By SubjectCode");
-            ConsoleHelper.WriteLine("10.Get All Student");
-            ConsoleHelper.WriteLine("11.Add Student");
-            ConsoleHelper.WriteLine("12.Edit Student");
-            ConsoleHelper.WriteLine("13.Get Student By roll No");
-            ConsoleHelper.WriteLine("14.Delete Student");
-            //ConsoleHelper.WriteLine("12.Get Course By roll No");
-            ConsoleHelper.WriteLine("15.Add Marks");
-            ConsoleHelper.WriteLine("16.Display subject Wise  Marks by Roll No");
-            ConsoleHelper.WriteLine("17.Display Avg MArks Of Course");
-            ConsoleHelper.WriteLine("18.Display Student Report With Marks");
-            ConsoleHelper.WriteLine("19.Display Course Wise Max Marks");
-
-            ConsoleHelper.WriteLine("0.Exit");
+            ConsoleHelper.WriteLine("1.Add Data");
+            ConsoleHelper.WriteLine("2.Delete Data");
+            ConsoleHelper.WriteLine("3.GetAll Data");
+            ConsoleHelper.WriteLine("4.Updated Data");
+            ConsoleHelper.WriteLine("5.Get Single Data");
+           
         }
 
         public  void Show()
@@ -52,103 +52,73 @@ namespace StudentPerformanceSystem.MenuMgt
             int val;
             do
             {
+                Console.WriteLine("Want to Clear Screen");
                 if(Console.ReadLine()=="y")
                 {
                     Console.Clear();
                 }
-                 ShowMenu();
-                val= int.Parse(Console.ReadLine());
+                 
+                if(menu=="Report")
+                     ReportMenu();
+                else
+                    ShowCrudMenu();
+                ConsoleHelper.WriteLine("0.Go Back Main Menu");
+
+
+                val = int.Parse(Console.ReadLine());
 
                 switch (val)
                 {
 
                     case 1:
                         Console.Clear();
-                        coursemanagement.AddOrEditCourse();
+                        crudOperation.AddOrEdit();
                         
                         break;
 
                     case 2:
                         Console.Clear();
-                        coursemanagement.DeleteCourse();
+                        crudOperation.Delete();
                         break;
 
                     case 3:
-                        coursemanagement.getAllCourse();
+                        crudOperation.GetAllData();
                         break;
-                    case 33:
-                        Console.Clear();
-                        coursemanagement.GetCourse();
-                        break;
+                   
                     case 4:
                         Console.Clear();
-                        coursemanagement.EditCourse();
+                        crudOperation.Edit();
+                        break;
+                    case 5:
+                        Console.Clear();
+                        crudOperation.GetSingleData();
                         break;
 
-                    case 5:
-                        subjectManagement.getAllSubjects();
-                        break;
+                  
                     case 6:
                         Console.Clear();
-                        subjectManagement.AddOrEditSubject();
+                        reMan.getCourseWiseAvgMarks();
                         break;
+
                     case 7:
                         Console.Clear();
-                        subjectManagement.EditSubject();
+                        reMan.getStudentReportWithMarks();
                         break;
+
                     case 8:
-                        subjectManagement.DeleteSubject();
+                        Console.Clear();
+                        reMan.GetCourseWiseMaxMarks();
                         break;
                     case 9:
                         Console.Clear();
-                        subjectManagement.GetSubject();
-                        break;
-
-                    case 10:
-                        Console.Clear();
-                        studentManagement.getAllStudents();
-                        break;
-                    case 11:
-                        Console.Clear();
-                        studentManagement.AddOrEditStudent();
-                        break;
-                       
-                        
-                    case 12:
-                        Console.Clear();
-                        studentManagement.EditStudent();
-                        break;
-                    case 13:
-                        studentManagement.GetStudent();
-                            break;
-                    case 14:
-                        Console.Clear();
-                        studentManagement.DeleteStudent();
-                        break;
-                    case 15:
-                        markManagement.AddMarks();
-                        break;
-                    case 16:
-                        Console.Clear();
-                        markManagement.GetMarkByRollNo();
-                        break;
-                    case 17:
-                        Console.Clear();
-                        coursemanagement.getCourseWiseAvgMarks();
-                        break;
-
-                    case 18:
-                        Console.Clear();
-                        studentManagement.getStudentReportWithMarks();
-                        break;
-
-                    case 19:
-                        Console.Clear();
-                        coursemanagement.GetCourseWiseMaxMarks();
+                        reMan.GetCourseWiseMaxMarks();
                         break;
 
                     case 0:
                         return;
+                    default:
+                        ConsoleHelper.ShowWarning("Wrong Input");
+                        break;
                 }
        
 

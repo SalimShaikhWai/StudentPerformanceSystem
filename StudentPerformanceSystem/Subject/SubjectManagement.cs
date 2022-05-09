@@ -1,4 +1,5 @@
-﻿using StudentPerformanceSystem.Course;
+﻿using StudentPerformanceSystem.CollectionOfInterfaces;
+using StudentPerformanceSystem.Course;
 using StudentPerformanceSystem.MenuMgt;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StudentPerformanceSystem.Subject
 {
-    public class SubjectManagement
+    public class SubjectManagement:Icrud
     {
 
         SubjectService subjectService;
@@ -21,7 +22,7 @@ namespace StudentPerformanceSystem.Subject
             subjectService = new SubjectService();
             s = new Subject();
         }
-        public void SubjectHeader()
+        public void Header()
         {
          ConsoleHelper.WriteHeader(120, "Subject Details");
             ConsoleHelper.WriteText(10, "Subject Id");
@@ -31,7 +32,7 @@ namespace StudentPerformanceSystem.Subject
             ConsoleHelper.WriteText(20, "Course");
             Console.WriteLine();
         }
-        public void ShowSubjects()
+        public void ShowDataOneByOne()
         {
             ConsoleHelper.DrawLine(120);
             ConsoleHelper.WriteText(10,s.SubjectId.ToString());
@@ -41,12 +42,12 @@ namespace StudentPerformanceSystem.Subject
             ConsoleHelper.WriteText(20,s.CourseCode.ToString());
             Console.WriteLine();
         }
-        public void getAllSubjects()
+        public void GetAllData()
         {
             ConsoleHelper.WriteHeader(120, "Display Operation on Subjects");
             using (SqlDataReader reader = subjectService.GetAllSubjects())
             {
-                SubjectHeader();
+                Header();
                 while (reader.Read())
                 {
                    s.SubjectId = int.Parse(reader[0].ToString());
@@ -54,14 +55,14 @@ namespace StudentPerformanceSystem.Subject
                     s.SubjectTitle = reader[2].ToString();
                     s.SubjectDescription = reader[3].ToString();
                     s.CourseCode = reader[4].ToString();
-                    ShowSubjects();
+                    ShowDataOneByOne();
 
                 }
             }
 
         }
 
-        public void AddOrEditSubject(string operation = "insert")
+        public void AddOrEdit(string operation = "insert")
         {
             ConsoleHelper.WriteHeader(120, "Add Operation on Subjects");
             ConsoleHelper.WriteLine("Enter you Subject Code");
@@ -89,13 +90,13 @@ namespace StudentPerformanceSystem.Subject
                 ConsoleHelper.WriteLine(subjectService.EditSubject(s));
             }
         }
-        public void GetSubject()
+        public void GetSingleData()
         {
 
             ConsoleHelper.WriteLine("Enter you Subject Code");
             string subjectCode = Console.ReadLine();
             SqlDataReader reader = subjectService.GetSubjectBySubjectCode(subjectCode);
-            SubjectHeader();
+            Header();
             while (reader.Read())
             {
                 s.SubjectId = int.Parse(reader[0].ToString());
@@ -103,14 +104,14 @@ namespace StudentPerformanceSystem.Subject
                 s.SubjectTitle = reader[2].ToString();
                 s.SubjectDescription = reader[3].ToString();
                 s.CourseCode = reader[4].ToString();
-                ShowSubjects();
+                ShowDataOneByOne();
 
             }
         }
 
-        public void DeleteSubject()
+        public void Delete()
         {
-            GetSubject();
+            GetSingleData();
             ConsoleHelper.WriteLine("Do you want to Delete Course Y/N");
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
@@ -123,14 +124,14 @@ namespace StudentPerformanceSystem.Subject
             }
         }
 
-        public void EditSubject()
+        public void Edit()
         {
-            GetSubject();
+            GetSingleData();
             ConsoleHelper.WriteLine("Do you want to Edit Subject Y/N");
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
             {
-                AddOrEditSubject("updtae");
+                AddOrEdit("updtae");
             }
             else
             {

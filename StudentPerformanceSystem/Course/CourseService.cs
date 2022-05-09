@@ -55,24 +55,9 @@ namespace StudentPerformanceSystem.Course
             DbConnection.ExcecuteNonQuery();
 
         }
-        public SqlDataReader DisplayCourseWiseAverageMarks()
-        {
-            DbConnection.GetConnection();
-            DbConnection.GetStoreProcedure("SCcourse.CourseWiseAvgMarks");
-
-           return  DbConnection.ExcecuteReader();
-        }
-        public SqlDataReader DisplayCourseWiseHighestMarks()
-        {
-            DbConnection.GetConnection();
-            DbConnection.GetStoreProcedure("SCcourse.CourseWiseMaxMarks");
-
-            return DbConnection.ExcecuteReader();
-        }
-        public void DisplayCourseWiseTopper()
-        {
-
-        }
+       
+      
+        
 
     }
 }

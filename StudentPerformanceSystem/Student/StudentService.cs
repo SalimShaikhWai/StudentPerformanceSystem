@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentPerformanceSystem.Student
+namespace StudentPerformanceSystem.Students
 {
     public  class StudentService
     {
@@ -59,14 +59,7 @@ namespace StudentPerformanceSystem.Student
 
 
 
-        public SqlDataReader getStudentReportWithMarks()
-        {
-            DbConnection.GetConnection();
-            DbConnection.GetStoreProcedure("student.StudentReport");
-       
-            return  DbConnection.ExcecuteReader();
-
-        }
+      
 
     }
 }

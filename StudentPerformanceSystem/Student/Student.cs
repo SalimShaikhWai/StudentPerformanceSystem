@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentPerformanceSystem.Student
+namespace StudentPerformanceSystem.Students
 {
     public class Student
     {

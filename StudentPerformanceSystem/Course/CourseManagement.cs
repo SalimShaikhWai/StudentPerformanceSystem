@@ -5,10 +5,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using StudentPerformanceSystem.CollectionOfInterfaces;
 namespace StudentPerformanceSystem.Course
 {
-    public class CourseManagement
+    public class CourseManagement:Icrud
     {
         CourseService courseService;
         Course c;
@@ -17,7 +17,7 @@ namespace StudentPerformanceSystem.Course
             courseService = new CourseService();
             c = new Course();
         }
-        public void AddOrEditCourse(string operation = "insert")
+        public void AddOrEdit(string operation = "insert")
         {
             ConsoleHelper.WriteHeader(120, "Add Operation on course");
             ConsoleHelper.WriteLine("Enter you Course Code");
@@ -41,40 +41,40 @@ namespace StudentPerformanceSystem.Course
                 ConsoleHelper.WriteLine(courseService.Edit(c));
             }
         }
-        public void getAllCourse()
+        public void GetAllData()
         {
             ConsoleHelper.WriteHeader(120, "Display Operation on Course");
             using (SqlDataReader reader = courseService.GetAllCourse())
             {
-                CourseHeader();
+                Header();
                 while (reader.Read())
                 {
                     c.Course_id = int.Parse(reader[0].ToString());
                     c.Course_code = reader[1].ToString();
                     c.Course_title = reader[2].ToString();
                     c.Course_description = reader[3].ToString();
-                    ShowCourse();
+                    ShowDataOneByOne();
                 }
             }
         }
-        public void GetCourse()
+        public void GetSingleData()
         {
             ConsoleHelper.WriteLine("Enter you Course Code");
             string courseCode = Console.ReadLine();
             SqlDataReader reader = courseService.GetCourseByCourseCode(courseCode);
-            CourseHeader();
+            Header();
             while (reader.Read())
             {
                 c.Course_id = int.Parse(reader[0].ToString());
                 c.Course_code = reader[1].ToString();
                 c.Course_title = reader[2].ToString();
                 c.Course_description = reader[3].ToString();
-                ShowCourse();
+                ShowDataOneByOne();
             }
         }
-        public void DeleteCourse()
+        public void Delete()
         {
-            GetCourse();
+            GetSingleData();
             ConsoleHelper.WriteLine("Do you want to Edit Course Y/");
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
@@ -84,7 +84,7 @@ namespace StudentPerformanceSystem.Course
 
 
         }
-        public void CourseHeader()
+        public void Header()
         {
             ConsoleHelper.WriteHeader(120, "Course Details");
             ConsoleHelper.WriteText(10, "Course_Id");
@@ -94,7 +94,7 @@ namespace StudentPerformanceSystem.Course
             Console.WriteLine();
 
         }
-        public void ShowCourse()
+        public void ShowDataOneByOne()
         {
             ConsoleHelper.DrawLine(120);
             ConsoleHelper.WriteText(10, c.Course_id.ToString());
@@ -103,14 +103,14 @@ namespace StudentPerformanceSystem.Course
             ConsoleHelper.WriteText(60, c.Course_description);
 
         }
-        public void EditCourse()
+        public void Edit()
         {
-            GetCourse();
+            GetSingleData();
             ConsoleHelper.WriteLine("Do you want to Edit Course Y/N");
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
             {
-                AddOrEditCourse("updtae");
+                AddOrEdit("updtae");
             }
             else
             {
@@ -118,40 +118,8 @@ namespace StudentPerformanceSystem.Course
             }
         }
 
-        public void getCourseWiseAvgMarks()
-        {
-            SqlDataReader reader = courseService.DisplayCourseWiseAverageMarks();
-            ConsoleHelper.WriteHeader(120, "Course With Avg Marks");
-            ConsoleHelper.WriteText(60, "Course Name");
-            ConsoleHelper.WriteText(60, "Avg Marks");
-            Console.WriteLine();
+       
 
-            while (reader.Read())
-            {
-                ConsoleHelper.DrawLine(120);
-                ConsoleHelper.WriteText(60, reader[0].ToString());
-                ConsoleHelper.WriteText(60, reader[1].ToString());
-                Console.WriteLine();
-            }
-
-        }
-
-
-        public void GetCourseWiseMaxMarks()
-        {
-            SqlDataReader reader = courseService.DisplayCourseWiseHighestMarks();
-            ConsoleHelper.WriteHeader(120, "Course Wise Max Marks");
-            ConsoleHelper.WriteText(60, "Course Name");
-            ConsoleHelper.WriteText(60, "Max Marks");
-            Console.WriteLine();
-
-            while (reader.Read())
-            {
-                ConsoleHelper.DrawLine(120);
-                ConsoleHelper.WriteText(60, reader[0].ToString());
-                ConsoleHelper.WriteText(60, reader[1].ToString());
-                Console.WriteLine();
-            }
-        }
+       
     }
 }

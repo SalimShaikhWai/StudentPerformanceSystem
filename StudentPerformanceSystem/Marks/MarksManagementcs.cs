@@ -1,4 +1,5 @@
-﻿using StudentPerformanceSystem.MenuMgt;
+﻿using StudentPerformanceSystem.CollectionOfInterfaces;
+using StudentPerformanceSystem.MenuMgt;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -8,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace StudentPerformanceSystem.Marks
 {
-    internal class MarksManagementcs
+    internal class MarksManagement:Icrud
     {
         MarkManagement markService;
         Mark m;
 
 
-        public MarksManagementcs()
+        public MarksManagement()
         {
             markService = new MarkManagement();
             m = new Mark();
         }
-        public void SubjectHeader()
+        public void Header()
         {
             ConsoleHelper.WriteHeader(120, "Marks Details");
             ConsoleHelper.WriteText(20, "Roll no");
@@ -38,12 +39,12 @@ namespace StudentPerformanceSystem.Marks
         //    ConsoleHelper.WriteText(20, s.CourseCode.ToString());
         //    Console.WriteLine();
         //}
-        public void GetMarkByRollNo()
+        public void GetSingleData()
         {
             ConsoleHelper.WriteLine("Enter you roll no");
             int rollNo = int.Parse(Console.ReadLine());
             SqlDataReader reader = markService.GetmMarksByRollno(rollNo);
-            SubjectHeader();
+            Header();
             while (reader.Read())
             {
                 ConsoleHelper.DrawLine(120);
@@ -57,7 +58,7 @@ namespace StudentPerformanceSystem.Marks
             }
         }
 
-        public void AddMarks(string operation = "insert")
+        public void AddOrEdit(string operation = "insert")
         {
             ConsoleHelper.WriteHeader(120, "Add Operation on Student");
             ConsoleHelper.WriteLine("Enter you student roll No");
@@ -83,5 +84,24 @@ namespace StudentPerformanceSystem.Marks
             }
         }
 
+        public void GetAllData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowDataOneByOne()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Edit()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

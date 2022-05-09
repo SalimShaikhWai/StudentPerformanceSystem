@@ -1,4 +1,5 @@
-﻿using StudentPerformanceSystem.MenuMgt;
+﻿using StudentPerformanceSystem.CollectionOfInterfaces;
+using StudentPerformanceSystem.MenuMgt;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -6,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentPerformanceSystem.Student
+namespace StudentPerformanceSystem.Students
 {
-    public class StudentManagement
+    public class StudentManagement:Icrud
     {
 
 
@@ -20,27 +21,27 @@ namespace StudentPerformanceSystem.Student
             s = new Student();
         }
 
-        public void StudentHeader()
+        public void Header()
         {
             ConsoleHelper.WriteHeader(120, "Student Details");
             ConsoleHelper.WriteText(10, "Roll Number");
-            ConsoleHelper.WriteText(15, "Student Name");
+            ConsoleHelper.WriteText(20, "Student Name");
             ConsoleHelper.WriteText(30, "Student Email");
             ConsoleHelper.WriteText(40, "Student Address");
             ConsoleHelper.WriteText(20, "Course");
             Console.WriteLine();
         }
-        public void ShowStudent()
+        public void ShowDataOneByOne()
         {
-            ConsoleHelper.DrawLine(120);
+            //ConsoleHelper.DrawLine(120);
             ConsoleHelper.WriteText(10, s.StudentRollNo.ToString());
-            ConsoleHelper.WriteText(25, s.StudentName);
+            ConsoleHelper.WriteText(30, s.StudentName);
             ConsoleHelper.WriteText(30, s.StudentEmail);
-            ConsoleHelper.WriteText(40, s.StudentEmail);
-            ConsoleHelper.WriteText(20, s.CourseCode.ToString());
+            ConsoleHelper.WriteText(25, s.StudentAddress);
+            ConsoleHelper.WriteText(25, s.CourseCode.ToString());
             ConsoleHelper.WriteLine();
         }
-        public void AddOrEditStudent(string operation = "insert")
+        public void AddOrEdit(string operation = "insert")
         {
             ConsoleHelper.WriteHeader(120, "Add Operation on Student");
             ConsoleHelper.WriteLine("Enter you student Name");
@@ -67,12 +68,12 @@ namespace StudentPerformanceSystem.Student
                 ConsoleHelper.WriteLine(studentService.EditStudent(s));
             }
         }
-        public void getAllStudents()
+        public void GetAllData()
         {
             ConsoleHelper.WriteHeader(120, "Display Operation on Subjects");
             using (SqlDataReader reader = studentService.GetAllStudent())
             {
-                StudentHeader();
+                Header();
                 while (reader.Read())
                 {
                     s.StudentRollNo = int.Parse(reader[0].ToString());
@@ -80,7 +81,7 @@ namespace StudentPerformanceSystem.Student
                     s.StudentEmail = reader[2].ToString();
                     s.StudentAddress = reader[3].ToString();
                     s.CourseCode = reader[4].ToString();
-                    ShowStudent();
+                    ShowDataOneByOne();
 
                 }
             }
@@ -88,13 +89,13 @@ namespace StudentPerformanceSystem.Student
         }
 
 
-        public void GetStudent()
+        public void GetSingleData()
         {
 
             ConsoleHelper.WriteLine("Enter you roll no");
             int rollNo =int.Parse( Console.ReadLine());
             SqlDataReader reader = studentService.GetStudentByRollno(rollNo);
-            StudentHeader();
+            Header();
             while (reader.Read())
             {
                 s.StudentRollNo = int.Parse(reader[0].ToString());
@@ -102,27 +103,27 @@ namespace StudentPerformanceSystem.Student
                 s.StudentEmail = reader[2].ToString();
                 s.StudentAddress = reader[3].ToString();
                 s.CourseCode = reader[4].ToString();
-                ShowStudent();
+                ShowDataOneByOne();
 
             }
         }
-        public void EditStudent()
+        public void Edit()
         {
-            GetStudent();
+            GetSingleData();
             ConsoleHelper.WriteLine("Do you want to Edit Subject Y/N");
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
             {
-                AddOrEditStudent("updtae");
+                AddOrEdit("updtae");
             }
             else
             {
                 ConsoleHelper.WriteLine("Ok Thanks");
             }
         }
-        public void DeleteStudent()
+        public void Delete()
         {
-            GetStudent();
+            GetSingleData();
             ConsoleHelper.WriteLine("Do you want to Delete Course Y/N");
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
@@ -135,31 +136,6 @@ namespace StudentPerformanceSystem.Student
             }
         }
 
-        public void getStudentReportWithMarks()
-        {
-            SqlDataReader reader = studentService.getStudentReportWithMarks();
-
-            ConsoleHelper.WriteHeader(120, "Student Report With Marks");
-            ConsoleHelper.WriteText(10, "Roll No");
-            ConsoleHelper.WriteText(40, "Student NAme");
-            ConsoleHelper.WriteText(30, "Course Title");
-            ConsoleHelper.WriteText(20, "Marks");
-            Console.WriteLine();
-
-            while (reader.Read())
-            {
-                ConsoleHelper.DrawLine(120);
-                ConsoleHelper.WriteText(10, reader[0].ToString());
-                ConsoleHelper.WriteText(40, reader[1].ToString());
-
-                ConsoleHelper.WriteText(30, reader[2].ToString());
-                ConsoleHelper.WriteText(20, reader[3].ToString());
-                Console.WriteLine();
-            }
-
-
-        }
-
-
+        
     }
 }
