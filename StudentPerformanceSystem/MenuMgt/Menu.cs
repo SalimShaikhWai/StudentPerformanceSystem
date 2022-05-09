@@ -39,7 +39,10 @@ namespace StudentPerformanceSystem.MenuMgt
             ConsoleHelper.WriteLine("14.Delete Student");
             //ConsoleHelper.WriteLine("12.Get Course By roll No");
             ConsoleHelper.WriteLine("15.Add Marks");
-            ConsoleHelper.WriteLine("16.Display Marks by Roll No");
+            ConsoleHelper.WriteLine("16.Display subject Wise  Marks by Roll No");
+            ConsoleHelper.WriteLine("17.Display Avg MArks Of Course");
+            ConsoleHelper.WriteLine("18.Display Student Report With Marks");
+            ConsoleHelper.WriteLine("19.Display Course Wise Max Marks");
 
             ConsoleHelper.WriteLine("0.Exit");
         }
@@ -49,17 +52,24 @@ namespace StudentPerformanceSystem.MenuMgt
             int val;
             do
             {
-                ShowMenu();
+                if(Console.ReadLine()=="y")
+                {
+                    Console.Clear();
+                }
+                 ShowMenu();
                 val= int.Parse(Console.ReadLine());
 
                 switch (val)
                 {
 
                     case 1:
-                        coursemanagement.AddCourse();
+                        Console.Clear();
+                        coursemanagement.AddOrEditCourse();
+                        
                         break;
 
                     case 2:
+                        Console.Clear();
                         coursemanagement.DeleteCourse();
                         break;
 
@@ -67,9 +77,11 @@ namespace StudentPerformanceSystem.MenuMgt
                         coursemanagement.getAllCourse();
                         break;
                     case 33:
+                        Console.Clear();
                         coursemanagement.GetCourse();
                         break;
                     case 4:
+                        Console.Clear();
                         coursemanagement.EditCourse();
                         break;
 
@@ -77,40 +89,62 @@ namespace StudentPerformanceSystem.MenuMgt
                         subjectManagement.getAllSubjects();
                         break;
                     case 6:
-                        subjectManagement.AddSubject();
+                        Console.Clear();
+                        subjectManagement.AddOrEditSubject();
                         break;
                     case 7:
+                        Console.Clear();
                         subjectManagement.EditSubject();
                         break;
                     case 8:
                         subjectManagement.DeleteSubject();
                         break;
                     case 9:
+                        Console.Clear();
                         subjectManagement.GetSubject();
                         break;
 
                     case 10:
+                        Console.Clear();
                         studentManagement.getAllStudents();
                         break;
                     case 11:
-                        studentManagement.AddStudent();
+                        Console.Clear();
+                        studentManagement.AddOrEditStudent();
                         break;
                        
                         
                     case 12:
+                        Console.Clear();
                         studentManagement.EditStudent();
                         break;
                     case 13:
                         studentManagement.GetStudent();
                             break;
                     case 14:
+                        Console.Clear();
                         studentManagement.DeleteStudent();
                         break;
                     case 15:
                         markManagement.AddMarks();
                         break;
                     case 16:
+                        Console.Clear();
                         markManagement.GetMarkByRollNo();
+                        break;
+                    case 17:
+                        Console.Clear();
+                        coursemanagement.getCourseWiseAvgMarks();
+                        break;
+
+                    case 18:
+                        Console.Clear();
+                        studentManagement.getStudentReportWithMarks();
+                        break;
+
+                    case 19:
+                        Console.Clear();
+                        coursemanagement.GetCourseWiseMaxMarks();
                         break;
 
                     case 0:

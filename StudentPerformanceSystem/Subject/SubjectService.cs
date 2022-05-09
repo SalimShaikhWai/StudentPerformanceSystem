@@ -12,7 +12,7 @@ namespace StudentPerformanceSystem.Subject
     {
         public SqlDataReader GetAllSubjects()
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("SCcourse.GetAllSubjects");
             return DbConnection.ExcecuteReader();
         }
@@ -20,7 +20,7 @@ namespace StudentPerformanceSystem.Subject
 
         public string AddSubject(Subject sub)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("SCcourse.insertIntoSubjects");
             DbConnection.AddInputParameter("subject_code", sub.SubjectCode);
             DbConnection.AddInputParameter("subject_title", sub.SubjectTitle);
@@ -31,7 +31,7 @@ namespace StudentPerformanceSystem.Subject
         }
         public string EditSubject(Subject sub)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("SCcourse.updatedSubject");
             DbConnection.AddInputParameter("subject_id",sub.SubjectId);
             DbConnection.AddInputParameter("subject_code", sub.SubjectCode);
@@ -42,7 +42,7 @@ namespace StudentPerformanceSystem.Subject
         }
         public void Delete(int subjectId)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("SCcourse.UpdatedStausSubject");
             DbConnection.AddInputParameter("subjectId", subjectId);
             DbConnection.ExcecuteNonQuery();
@@ -50,7 +50,7 @@ namespace StudentPerformanceSystem.Subject
         }
         public SqlDataReader GetSubjectBySubjectCode(string? subjectCode)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("SCcourse.getSubjectBySubjectCode");
             DbConnection.AddInputParameter("subject_code", subjectCode);
             return DbConnection.ExcecuteReader();

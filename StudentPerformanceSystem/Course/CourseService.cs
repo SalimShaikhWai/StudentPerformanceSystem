@@ -14,14 +14,14 @@ namespace StudentPerformanceSystem.Course
         //DbConnection dbconn = new DbConnection();
         public SqlDataReader GetAllCourse()
         {
-            DbConnection.getConnection();
-            DbConnection.getCommand("select *from SCcourse.course ");
+            DbConnection.GetConnection();
+            DbConnection.GetCommand("select *from SCcourse.course ");
           return DbConnection.ExcecuteReader();
             
         }
         public SqlDataReader GetCourseByCourseCode(string course_code)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("SCcourse.getCourseByCourseCode");
             DbConnection.AddInputParameter("course_code", course_code);
             return DbConnection.ExcecuteReader();
@@ -29,7 +29,7 @@ namespace StudentPerformanceSystem.Course
         }
         public string Add(Course c)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("SCcourse.InsertCourse");
             DbConnection.AddInputParameter("course_code", c.Course_code);
             DbConnection.AddInputParameter("course_title", c.Course_title);
@@ -38,7 +38,7 @@ namespace StudentPerformanceSystem.Course
         }
         public string Edit(Course c)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("SCcourse.UpdateCourseByCourseCode");
             DbConnection.AddInputParameter("course_id", c.Course_id);
             DbConnection.AddInputParameter("course_code", c.Course_code);
@@ -49,19 +49,25 @@ namespace StudentPerformanceSystem.Course
         }
         public void Delete(int courseId)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("SCcourse.UpdatedStatusOfCourse");
             DbConnection.AddInputParameter("CourseId", courseId);
             DbConnection.ExcecuteNonQuery();
 
         }
-        public void DisplayCourseWiseAverageMarks()
+        public SqlDataReader DisplayCourseWiseAverageMarks()
         {
+            DbConnection.GetConnection();
+            DbConnection.GetStoreProcedure("SCcourse.CourseWiseAvgMarks");
 
+           return  DbConnection.ExcecuteReader();
         }
-        public void DisplayCourseWiseHighestMarks()
+        public SqlDataReader DisplayCourseWiseHighestMarks()
         {
+            DbConnection.GetConnection();
+            DbConnection.GetStoreProcedure("SCcourse.CourseWiseMaxMarks");
 
+            return DbConnection.ExcecuteReader();
         }
         public void DisplayCourseWiseTopper()
         {

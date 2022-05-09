@@ -61,7 +61,7 @@ namespace StudentPerformanceSystem.Subject
 
         }
 
-        public void AddSubject(string operation = "insert")
+        public void AddOrEditSubject(string operation = "insert")
         {
             ConsoleHelper.WriteHeader(120, "Add Operation on Subjects");
             ConsoleHelper.WriteLine("Enter you Subject Code");
@@ -111,7 +111,7 @@ namespace StudentPerformanceSystem.Subject
         public void DeleteSubject()
         {
             GetSubject();
-            ConsoleHelper.WriteLine("Do you want to Delete Course Y/");
+            ConsoleHelper.WriteLine("Do you want to Delete Course Y/N");
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
             {
@@ -130,7 +130,7 @@ namespace StudentPerformanceSystem.Subject
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
             {
-                AddSubject("updtae");
+                AddOrEditSubject("updtae");
             }
             else
             {

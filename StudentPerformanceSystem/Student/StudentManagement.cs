@@ -20,7 +20,7 @@ namespace StudentPerformanceSystem.Student
             s = new Student();
         }
 
-        public void SubjectHeader()
+        public void StudentHeader()
         {
             ConsoleHelper.WriteHeader(120, "Student Details");
             ConsoleHelper.WriteText(10, "Roll Number");
@@ -30,17 +30,17 @@ namespace StudentPerformanceSystem.Student
             ConsoleHelper.WriteText(20, "Course");
             Console.WriteLine();
         }
-        public void ShowSubjects()
+        public void ShowStudent()
         {
             ConsoleHelper.DrawLine(120);
             ConsoleHelper.WriteText(10, s.StudentRollNo.ToString());
-            ConsoleHelper.WriteText(15, s.StudentName);
+            ConsoleHelper.WriteText(25, s.StudentName);
             ConsoleHelper.WriteText(30, s.StudentEmail);
             ConsoleHelper.WriteText(40, s.StudentEmail);
             ConsoleHelper.WriteText(20, s.CourseCode.ToString());
-            Console.WriteLine();
+            ConsoleHelper.WriteLine();
         }
-        public void AddStudent(string operation = "insert")
+        public void AddOrEditStudent(string operation = "insert")
         {
             ConsoleHelper.WriteHeader(120, "Add Operation on Student");
             ConsoleHelper.WriteLine("Enter you student Name");
@@ -72,7 +72,7 @@ namespace StudentPerformanceSystem.Student
             ConsoleHelper.WriteHeader(120, "Display Operation on Subjects");
             using (SqlDataReader reader = studentService.GetAllStudent())
             {
-                SubjectHeader();
+                StudentHeader();
                 while (reader.Read())
                 {
                     s.StudentRollNo = int.Parse(reader[0].ToString());
@@ -80,7 +80,7 @@ namespace StudentPerformanceSystem.Student
                     s.StudentEmail = reader[2].ToString();
                     s.StudentAddress = reader[3].ToString();
                     s.CourseCode = reader[4].ToString();
-                    ShowSubjects();
+                    ShowStudent();
 
                 }
             }
@@ -94,7 +94,7 @@ namespace StudentPerformanceSystem.Student
             ConsoleHelper.WriteLine("Enter you roll no");
             int rollNo =int.Parse( Console.ReadLine());
             SqlDataReader reader = studentService.GetStudentByRollno(rollNo);
-            SubjectHeader();
+            StudentHeader();
             while (reader.Read())
             {
                 s.StudentRollNo = int.Parse(reader[0].ToString());
@@ -102,7 +102,7 @@ namespace StudentPerformanceSystem.Student
                 s.StudentEmail = reader[2].ToString();
                 s.StudentAddress = reader[3].ToString();
                 s.CourseCode = reader[4].ToString();
-                ShowSubjects();
+                ShowStudent();
 
             }
         }
@@ -113,7 +113,7 @@ namespace StudentPerformanceSystem.Student
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
             {
-                AddStudent("updtae");
+                AddOrEditStudent("updtae");
             }
             else
             {
@@ -135,6 +135,30 @@ namespace StudentPerformanceSystem.Student
             }
         }
 
+        public void getStudentReportWithMarks()
+        {
+            SqlDataReader reader = studentService.getStudentReportWithMarks();
+
+            ConsoleHelper.WriteHeader(120, "Student Report With Marks");
+            ConsoleHelper.WriteText(10, "Roll No");
+            ConsoleHelper.WriteText(40, "Student NAme");
+            ConsoleHelper.WriteText(30, "Course Title");
+            ConsoleHelper.WriteText(20, "Marks");
+            Console.WriteLine();
+
+            while (reader.Read())
+            {
+                ConsoleHelper.DrawLine(120);
+                ConsoleHelper.WriteText(10, reader[0].ToString());
+                ConsoleHelper.WriteText(40, reader[1].ToString());
+
+                ConsoleHelper.WriteText(30, reader[2].ToString());
+                ConsoleHelper.WriteText(20, reader[3].ToString());
+                Console.WriteLine();
+            }
+
+
+        }
 
 
     }

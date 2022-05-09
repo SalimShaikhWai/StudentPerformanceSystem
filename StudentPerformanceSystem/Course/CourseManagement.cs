@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace StudentPerformanceSystem.Course
-{ 
+{
     public class CourseManagement
     {
         CourseService courseService;
@@ -17,8 +17,8 @@ namespace StudentPerformanceSystem.Course
             courseService = new CourseService();
             c = new Course();
         }
-        public void AddCourse(string operation="insert")
-        { 
+        public void AddOrEditCourse(string operation = "insert")
+        {
             ConsoleHelper.WriteHeader(120, "Add Operation on course");
             ConsoleHelper.WriteLine("Enter you Course Code");
             string courseCode = Console.ReadLine();
@@ -26,7 +26,7 @@ namespace StudentPerformanceSystem.Course
             string courseTitle = Console.ReadLine();
             ConsoleHelper.WriteLine("Enter you Course Description");
             string courseDesc = Console.ReadLine();
-           
+
             ConsoleHelper.DrawLine(120);
             if (operation == "insert")
             {
@@ -37,11 +37,9 @@ namespace StudentPerformanceSystem.Course
             {
                 c.Course_code = courseCode;
                 c.Course_title = courseTitle;
-                c.Course_description= courseDesc;
+                c.Course_description = courseDesc;
                 ConsoleHelper.WriteLine(courseService.Edit(c));
             }
-                
-
         }
         public void getAllCourse()
         {
@@ -51,23 +49,20 @@ namespace StudentPerformanceSystem.Course
                 CourseHeader();
                 while (reader.Read())
                 {
-                    c.Course_id=int.Parse( reader[0].ToString());
-                    c.Course_code=reader[1].ToString();
-                    c.Course_title=reader[2].ToString();
-                    c.Course_description=reader[3].ToString();
+                    c.Course_id = int.Parse(reader[0].ToString());
+                    c.Course_code = reader[1].ToString();
+                    c.Course_title = reader[2].ToString();
+                    c.Course_description = reader[3].ToString();
                     ShowCourse();
-
                 }
             }
-
         }
         public void GetCourse()
         {
-           
             ConsoleHelper.WriteLine("Enter you Course Code");
             string courseCode = Console.ReadLine();
-           SqlDataReader reader= courseService.GetCourseByCourseCode(courseCode);
-           CourseHeader();
+            SqlDataReader reader = courseService.GetCourseByCourseCode(courseCode);
+            CourseHeader();
             while (reader.Read())
             {
                 c.Course_id = int.Parse(reader[0].ToString());
@@ -75,23 +70,18 @@ namespace StudentPerformanceSystem.Course
                 c.Course_title = reader[2].ToString();
                 c.Course_description = reader[3].ToString();
                 ShowCourse();
-
             }
-
         }
         public void DeleteCourse()
         {
-          GetCourse();
+            GetCourse();
             ConsoleHelper.WriteLine("Do you want to Edit Course Y/");
             string Val = Console.ReadLine().ToLower();
             if (Val == "y")
-            {
                 courseService.Delete(c.Course_id);
-            }
             else
-            {
                 ConsoleHelper.WriteLine("Ok Thanks");
-            }
+
 
         }
         public void CourseHeader()
@@ -102,7 +92,7 @@ namespace StudentPerformanceSystem.Course
             ConsoleHelper.WriteText(30, "Course_Title");
             ConsoleHelper.WriteText(60, "Course_Description");
             Console.WriteLine();
-           
+
         }
         public void ShowCourse()
         {
@@ -111,16 +101,16 @@ namespace StudentPerformanceSystem.Course
             ConsoleHelper.WriteText(20, c.Course_code);
             ConsoleHelper.WriteText(30, c.Course_title);
             ConsoleHelper.WriteText(60, c.Course_description);
-            Console.WriteLine();
+
         }
-        public void  EditCourse()
+        public void EditCourse()
         {
             GetCourse();
-            ConsoleHelper.WriteLine("Do you want to Edit Course Y/");
-            string Val= Console.ReadLine().ToLower();
-            if(Val =="y")
+            ConsoleHelper.WriteLine("Do you want to Edit Course Y/N");
+            string Val = Console.ReadLine().ToLower();
+            if (Val == "y")
             {
-                AddCourse("updtae");
+                AddOrEditCourse("updtae");
             }
             else
             {
@@ -128,7 +118,40 @@ namespace StudentPerformanceSystem.Course
             }
         }
 
-       
+        public void getCourseWiseAvgMarks()
+        {
+            SqlDataReader reader = courseService.DisplayCourseWiseAverageMarks();
+            ConsoleHelper.WriteHeader(120, "Course With Avg Marks");
+            ConsoleHelper.WriteText(60, "Course Name");
+            ConsoleHelper.WriteText(60, "Avg Marks");
+            Console.WriteLine();
 
+            while (reader.Read())
+            {
+                ConsoleHelper.DrawLine(120);
+                ConsoleHelper.WriteText(60, reader[0].ToString());
+                ConsoleHelper.WriteText(60, reader[1].ToString());
+                Console.WriteLine();
+            }
+
+        }
+
+
+        public void GetCourseWiseMaxMarks()
+        {
+            SqlDataReader reader = courseService.DisplayCourseWiseHighestMarks();
+            ConsoleHelper.WriteHeader(120, "Course Wise Max Marks");
+            ConsoleHelper.WriteText(60, "Course Name");
+            ConsoleHelper.WriteText(60, "Max Marks");
+            Console.WriteLine();
+
+            while (reader.Read())
+            {
+                ConsoleHelper.DrawLine(120);
+                ConsoleHelper.WriteText(60, reader[0].ToString());
+                ConsoleHelper.WriteText(60, reader[1].ToString());
+                Console.WriteLine();
+            }
+        }
     }
 }

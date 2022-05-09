@@ -12,7 +12,7 @@ namespace StudentPerformanceSystem.Marks
     {
         public string AddMarks(Mark mark)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("marks.insertIntoMarks");
             DbConnection.AddInputParameter("student_rollNo", mark.StudentRollNo);
             DbConnection.AddInputParameter("subject_code", mark.SubjectCode);
@@ -25,7 +25,7 @@ namespace StudentPerformanceSystem.Marks
 
         public SqlDataReader GetmMarksByRollno(int?rollNo)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("marks.getMarksByRollno");
             DbConnection.AddInputParameter("rollNo",rollNo);
             return DbConnection.ExcecuteReader();

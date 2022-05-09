@@ -22,10 +22,10 @@ namespace StudentPerformanceSystem.Marks
         public void SubjectHeader()
         {
             ConsoleHelper.WriteHeader(120, "Marks Details");
-            ConsoleHelper.WriteText(10, "Roll no");
-            ConsoleHelper.WriteText(15, "Student Name");
+            ConsoleHelper.WriteText(20, "Roll no");
+            ConsoleHelper.WriteText(25, "Student Name");
             ConsoleHelper.WriteText(30, "Subject Name");
-            ConsoleHelper.WriteText(30, "Marks");
+            ConsoleHelper.WriteText(40, "Marks");
             Console.WriteLine();
         }
         //public void ShowSubjects()
@@ -48,10 +48,10 @@ namespace StudentPerformanceSystem.Marks
             {
                 ConsoleHelper.DrawLine(120);
                 //ConsoleHelper.WriteText(10, m.MarkId.ToString());
-                ConsoleHelper.WriteText(15,reader[0].ToString());
-                ConsoleHelper.WriteText(30,reader[1].ToString());
-                ConsoleHelper.WriteText(40, reader[2].ToString());
-                ConsoleHelper.WriteText(20, reader[3].ToString());
+                ConsoleHelper.WriteText(20,reader[0].ToString());
+                ConsoleHelper.WriteText(25,reader[1].ToString());
+                ConsoleHelper.WriteText(30, reader[2].ToString());
+                ConsoleHelper.WriteText(40, reader[3].ToString());
                 Console.WriteLine();
 
             }

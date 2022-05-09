@@ -10,23 +10,20 @@ namespace StudentPerformanceSystem.DBClass
 {
     public static class DbConnection
     {
-        static string connectionString= @"Data Source=WAIANGDESK21\MSSQLSERVER01;Initial Catalog=StudentMGTSystem;Integrated Security=True";
-       static SqlConnection conn;
+        static string connectionString = @"Data Source=WAIANGDESK21\MSSQLSERVER01;Initial Catalog=StudentMGTSystem;Integrated Security=True";
+        static SqlConnection conn;
         static SqlCommand cmd;
 
-        public static SqlConnection  getConnection()
+        public static SqlConnection GetConnection()
         {
-            
-           conn= new SqlConnection(connectionString);
-           return conn;
-            
+            conn = new SqlConnection(connectionString);
+            return conn;
         }
-
-        public static SqlCommand getCommand(string text)
+        public static SqlCommand GetCommand(string text)
         {
             if (conn.State != ConnectionState.Open)
-                    conn.Open();
-            cmd=new SqlCommand(text,conn);
+                conn.Open();
+            cmd = new SqlCommand(text, conn);
             return cmd;
         }
 
@@ -40,16 +37,15 @@ namespace StudentPerformanceSystem.DBClass
             return cmd;
         }
 
-        public static void AddInputParameter(string parameterName,dynamic value)
+        public static void AddInputParameter(string parameterName, dynamic value)
         {
-            cmd.Parameters.Add(new SqlParameter( "@"+parameterName,value));
+            cmd.Parameters.Add(new SqlParameter("@" + parameterName, value));
         }
         public static SqlDataReader ExcecuteReader()
         {
-           return cmd.ExecuteReader();
+            return cmd.ExecuteReader();
         }
-
-        public static string ExcecuteNonQuery()
+       public static string ExcecuteNonQuery()
         {
             try
             {
@@ -61,7 +57,6 @@ namespace StudentPerformanceSystem.DBClass
                 return ex.Message;
             }
         }
-
         public static void ExecuteScaler()
         {
             cmd.ExecuteScalar();

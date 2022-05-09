@@ -13,21 +13,21 @@ namespace StudentPerformanceSystem.Student
 
         public SqlDataReader GetAllStudent()
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("student.GetAllStudentInf");
             return DbConnection.ExcecuteReader();
         }
 
         public SqlDataReader GetStudentByRollno(int? rollNo)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("student.getStudentByRollno");
             DbConnection.AddInputParameter("rollNo", rollNo);
             return DbConnection.ExcecuteReader();
         }
         public string AddStudent(Student stud)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("student.insertIntoStudent");
             DbConnection.AddInputParameter("student_name", stud.StudentName);
             DbConnection.AddInputParameter("student_email", stud.StudentEmail);
@@ -38,7 +38,7 @@ namespace StudentPerformanceSystem.Student
         }
         public string EditStudent(Student stud)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("student.UpdateIntoStudent");
             DbConnection.AddInputParameter("student_rollNo", stud.StudentRollNo);
             DbConnection.AddInputParameter("student_name", stud.StudentName);
@@ -50,10 +50,21 @@ namespace StudentPerformanceSystem.Student
 
         public void Delete(int studentId)
         {
-            DbConnection.getConnection();
+            DbConnection.GetConnection();
             DbConnection.GetStoreProcedure("student.UpdatedStausOfStudent");
             DbConnection.AddInputParameter("rollNo", studentId);
             DbConnection.ExcecuteNonQuery();
+
+        }
+
+
+
+        public SqlDataReader getStudentReportWithMarks()
+        {
+            DbConnection.GetConnection();
+            DbConnection.GetStoreProcedure("student.StudentReport");
+       
+            return  DbConnection.ExcecuteReader();
 
         }
 
